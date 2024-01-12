@@ -21,6 +21,7 @@ const Alert = ({ message, children }: Props) => {
                 onClick={() => setShow(false)}
                 className=
                 {`
+                w-inherit h-inherit
                     ${show ? 'fixed' : 'hidden'}
                     w-screen h-screen 
                     top-0 left-0

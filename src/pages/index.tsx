@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import GuestLayout from '@/components/guestlayout'
 import ImageLoader from '@/components/imageloader'
+import ApplicationLogo from '@/components/applicationlogo'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,11 +16,11 @@ export default function Home() {
           className='flex flex-col items-center justify-center w-full h-screen px-4 py-2 gap-[10px]'
         >
           <h1>
-            <span className='text-4xl font-bold'>
-              Welcome to
+            <span className='text-4xl font-bold flex justify-center 
+            items-center font-poppins'>
+              Welcome to <ApplicationLogo className='text-4xl' />
             </span>
             <span className='text-4xl font-bold text-blue-500'>
-              {' '}...
             </span>
           </h1>
           <section

@@ -3,7 +3,25 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
-let dummyIsLogin: boolean = true; // skip login if true
+
+let dummyUserData = [
+    {
+        id: '1',
+        name: 'Robby',
+        email: 'student@gmail.com',
+        password: '123456'
+    },
+    {
+        id: '2',
+        name: 'Jessica',
+        email: 'teacher@gmail.com',
+        password: '123456'
+    }
+]
+
+let dummyIsLogin: boolean = false; // skip login if true
+
+
 
 const useAuth = () => {
     const queryClient = useQueryClient()
@@ -16,7 +34,13 @@ const useAuth = () => {
 
     const { mutate: login, } = useMutation({
         mutationKey: ['login'],
-        mutationFn: async () => {
+        mutationFn: async ({ email, password }: any) => {
+            // dummyUserData.forEach(user => {
+            //     if (user.email === email && user.password === password) {
+            //         dummyIsLogin = true
+            //         return dummyIsLogin
+            //     }
+            // })
             dummyIsLogin = true
             return dummyIsLogin
         },

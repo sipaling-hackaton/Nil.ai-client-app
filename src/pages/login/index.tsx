@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Resolver, useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools';
 import useAuth from '@/hooks/useAuth';
+import GuestLayout from '@/components/guestlayout';
 
 interface LoginTypes {
     email: string
@@ -15,21 +16,6 @@ const loginObject: LoginTypes = {
     password: ''
 }
 
-
-const resolver: Resolver<LoginTypes> = async (values) => {
-    return {
-        values: values.firstName ? values : {},
-        errors: !values.firstName
-            ? {
-                firstName: {
-                    type: "required",
-                    message: "This is required.",
-                },
-            }
-            : {},
-    }
-}
-
 export default function LoginPage() {
     const {
         control,
@@ -37,86 +23,90 @@ export default function LoginPage() {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<LoginTypes>({ resolver })
+    } = useForm<LoginTypes>()
 
     const { push } = useRouter()
-    const onSubmit = (data: LoginTypes) => {
-        console.log("data", data)
-        // push('/dashboard')
-        login()
-    }
+
 
 
     const { login, isLogin } = useAuth()
-    useEffect(() => {
-        console.log('isLogin', isLogin)
-    }, [isLogin])
 
+
+    const onSubmit = handleSubmit((data) => {
+        login(data)
+    })
     if (isLogin) {
         push('/dashboard')
     } else if (isLogin === false && isLogin !== undefined) {
         return (
-            <main
-                className='max-w-full w-full min-h-screen bg-gray-300 flex justify-center items-center'
-            >
-                <form
-                    className='flex flex-col items-center justify-center h-fit bg-white
-                rounded-md p-4 gap-4'
-                    onSubmit={(e: any) => {
-                        e.preventDefault()
-                        handleSubmit(onSubmit)
-                    }}
+            <GuestLayout>
+                <main
+                    className='max-w-full w-full min-h-screen flex flex-col items-center'
                 >
-                    <h2>
-                        Login
-                    </h2>
-                    <div
-                        className='flex flex-col'
+                    <form
+                        className='flex flex-col items-center justify-center h-fit gap-[1.25rem]'
                     >
-                        {
-                            // map login object
-                            Object.keys(loginObject).map((key, index) => (
-                                <div key={index}
-                                    className='flex flex-col'
-                                >
-                                    <label htmlFor={key}>{key}</label>
-                                    <input
-                                        className='border border-gray-400 rounded-md'
-                                        type={key}
-                                        id={key}
-                                        {...register(key)}
-                                    />
-                                </div>
-                            ))
-                        }
-                    </div>
-                    {/* <button
-                    type='submit'
-                    // onClick={handleLogin}
-                    className='bg-blue-500 text-white rounded-md
-                    px-4 py-2'
-                >
-                    Login
-                </button> */}
-                    <input
-                        onClick={(e: any) => {
-                            onSubmit(e)
-                        }}
-                        type="submit"
-                        className='bg-blue-500 text-white rounded-md
-                    px-4 py-2
-                    cursor-pointer'
-                        value="Login"
+                        <h2
+                            className='text-2xl font-bold text-center'
+                        >
+                            Log in
+                        </h2>
+                        <div
+                            className='flex flex-col gap-[2.5rem] bg-primmary
+                            rounded-md p-4'
+                        >
+                            {
+                                // map login object
+                                Object.keys(loginObject).map((key: any, index: number) => (
+                                    <div key={index}
+                                        className='flex flex-col'
+                                    >
+                                        <label
+                                            className='capitalize font-poppins'
+                                            htmlFor={key}>{key}
+                                        </label>
+                                        <p
+                                            className='text-red-500 font-poppins font-[300] capitalize'
+                                        >
+                                            {errors[key] && `${key} is required`}
+                                        </p>
+                                        <input
+                                            className='border border-gray-400 rounded-md bg-secondary placeholder:capitalize px-[1rem] py-2 outline-none'
+                                            type={key}
+                                            placeholder={`Your ${key}`}
+                                            id={key}
 
-                    />
-                    <div
-                        className='text-blue-500'
-                    >
-                        <a href="/register">Register</a>
-                    </div>
-                </form >
-                {/* <DevTool control={control} /> */}
-            </main >
+                                            {...register(key, { required: true })}
+                                        />
+                                    </div>
+                                ))
+                            }
+                            <a
+                                className='text-black text-[0.875rem] font-poppins font-[300] underline w-full text-center'
+                                href="">
+                                forgot password?
+                            </a>
+                        </div>
+                        <button
+                            onClick={onSubmit}
+                            className='bg-primmary px-[1.75rem] py-2 rounded-md mt-4 text-black font-poppins font-[600] uppercase w-full'
+                            value="Login"
+                        >
+                            Login
+                        </button>
+                        <div
+                            className='text-black text-[0.875rem] font-poppins font-[300] '
+                        >
+                            No account yet?
+                            <a
+                                className='underline'
+                                href="/register">Register Now</a>
+                        </div>
+                    </form >
+
+                    {/* <DevTool control={control} /> */}
+                </main >
+            </GuestLayout>
         )
     }
 }

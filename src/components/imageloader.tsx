@@ -19,6 +19,8 @@ const ImageLoader = ({
         src={src}
         className={className}
         alt='image'
+        unoptimized
+        unselectable='on'
         width={500}
         height={500}
     />
