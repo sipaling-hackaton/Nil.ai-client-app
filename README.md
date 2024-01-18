@@ -26,7 +26,8 @@ Here is how our system, **nil.ai**, works.
 **General Features**
 
 1. First, you will be required to login into our system. If you don't have an account yet, you can go register yourselft through the registration page.
-   ![1705584741499](image/README/1705584741499.png "Login Page")
+   ![Login Page](https://github.com/sipaling-hackaton/Nil.ai-client-app/assets/99465064/a1888d9d-7ed7-4aa3-a593-5fc4eb404c80)
+
 2. Then, you will be directed to **nil.ai**'s main dashboard. Here, there are several features that you can use, such as join new class, add new class, and go into one of the classes available. Beside that, you can filter the classes to search better if you act as both student and teacher in different classes. Lastly, you can also navigate to profile page or log out of the account.
 
    ![1705586860253](image/README/1705586860253.png)
